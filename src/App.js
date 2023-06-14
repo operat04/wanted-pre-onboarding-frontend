@@ -1,6 +1,7 @@
 import Signin from "./pages/SigninPage";
 import Signup from "./pages/SignupPage";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Todos from "./pages/todos";
 
 function App() {
   return (
@@ -9,6 +10,7 @@ function App() {
         <Routes>
           <Route path="/signin" element={<Signin />} />
           <Route path="/signup" element={<Signup />} />
+          <Route path="/todo" element={<Todos />} />
         </Routes>
       </BrowserRouter>
     </div>
