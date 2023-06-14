@@ -1,5 +1,7 @@
-import { useState } from "react";
+import axios from "axios";
+import { useEffect, useState } from "react";
 import { styled } from "styled-components";
+import { Link, useNavigate } from "react-router-dom";
 
 const InputContainer = styled.div`
   display: flex;
@@ -22,6 +24,7 @@ const InputContainer = styled.div`
 const Signin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   const handleEmail = (e) => {
     setEmail(e.target.value);
@@ -31,6 +34,19 @@ const Signin = () => {
     setPassword(e.target.value);
     console.log(password);
   };
+  const handleSubmit = () => {
+    axios
+      .post("https://www.pre-onboarding-selection-task.shop/auth/signin", {
+        email: email,
+        password: password,
+      })
+      .then((res) => localStorage.setItem("AccessToken", res.data.access_token))
+      .then(() => navigate("/todo", { replace: true }))
+      .catch((err) => console.log(err));
+  };
+  useEffect(() => {
+    localStorage.getItem("AccessToken") ? navigate("/todo") : "";
+  }, []);
 
   return (
     <InputContainer>
@@ -59,10 +75,13 @@ const Signin = () => {
       <button
         data-testid="signin-button"
         disabled={password.length < 8 || !email.includes("@")}
+        onClick={handleSubmit}
       >
         로그인
       </button>
-      <button>회원가입</button>
+      <Link to="/signup">
+        <button>회원가입</button>
+      </Link>
     </InputContainer>
   );
 };

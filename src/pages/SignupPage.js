@@ -1,4 +1,6 @@
-import { useState } from "react";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { styled } from "styled-components";
 
 const InputContainer = styled.div`
@@ -22,6 +24,7 @@ const InputContainer = styled.div`
 const Signup = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   const handleEmail = (e) => {
     setEmail(e.target.value);
@@ -31,6 +34,18 @@ const Signup = () => {
     setPassword(e.target.value);
     console.log(password);
   };
+  const handleSubmit = () => {
+    axios
+      .post("https://www.pre-onboarding-selection-task.shop/auth/signup", {
+        email: email,
+        password: password,
+      })
+      .then(() => navigate("/signin"))
+      .catch((err) => console.log(err));
+  };
+  useEffect(() => {
+    localStorage.getItem("AccessToken") ? navigate("/todo") : "";
+  }, []);
 
   return (
     <InputContainer>
@@ -57,8 +72,9 @@ const Signup = () => {
         <div></div>
       )}
       <button
-        data-testid="signin-button"
+        data-testid="signup-button"
         disabled={password.length < 8 || !email.includes("@")}
+        onClick={handleSubmit}
       >
         회원가입
       </button>
