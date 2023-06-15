@@ -74,7 +74,7 @@ const TodoItem = (todo) => {
             onChange={handleText}
           ></input>
         ) : (
-          <span>{todo.todo}</span>
+          <span className={todo.isCompleted ? "checked" : ""}>{todo.todo}</span>
         )}
       </label>
       {isedit ? (

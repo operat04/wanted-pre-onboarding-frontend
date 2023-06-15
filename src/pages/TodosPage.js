@@ -2,7 +2,23 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import TodoList from "./TodoList";
+import { styled } from "styled-components";
 
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  button {
+    margin-left: 5px;
+  }
+  .checked {
+    color: gray;
+    text-decoration: line-through;
+  }
+`;
+const InputContainer = styled.div`
+  display: flex;
+`;
 const TodosPage = () => {
   const navigate = useNavigate();
   const [data, setData] = useState([]);
@@ -42,18 +58,20 @@ const TodosPage = () => {
       .catch((err) => console.log(err));
   }, [data]);
   return (
-    <div>
+    <Container>
       <h1>Todos</h1>
-      <input
-        data-testid="new-todo-input"
-        onChange={handletodo}
-        value={todo}
-      ></input>
-      <button data-testid="new-todo-add-button" onClick={Addtodos}>
-        추가
-      </button>
+      <InputContainer>
+        <input
+          data-testid="new-todo-input"
+          onChange={handletodo}
+          value={todo}
+        ></input>
+        <button data-testid="new-todo-add-button" onClick={Addtodos}>
+          추가
+        </button>
+      </InputContainer>
       <TodoList data={data} />
-    </div>
+    </Container>
   );
 };
 
