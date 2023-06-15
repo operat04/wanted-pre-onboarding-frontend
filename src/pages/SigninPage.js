@@ -48,7 +48,7 @@ const Signin = () => {
 
   return (
     <InputContainer>
-      <h1>Signin Page</h1>
+      <h1>SignIn Page</h1>
       <input
         data-testid="email-input"
         placeholder="이메일을 입력해주세요"
