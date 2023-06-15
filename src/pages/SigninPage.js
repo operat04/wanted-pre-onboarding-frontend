@@ -28,11 +28,9 @@ const Signin = () => {
 
   const handleEmail = (e) => {
     setEmail(e.target.value);
-    console.log(email);
   };
   const handlePassword = (e) => {
     setPassword(e.target.value);
-    console.log(password);
   };
   const handleSubmit = () => {
     axios
