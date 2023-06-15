@@ -1,15 +1,18 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import TodoList from "./TodoList";
 
-const Todos = () => {
+const TodosPage = () => {
   const navigate = useNavigate();
   const [data, setData] = useState([]);
   const [todo, setTodo] = useState("");
 
+  //할일 추가하기
   const handletodo = (e) => {
     setTodo(e.target.value);
   };
+
   const Addtodos = () => {
     axios
       .post(
@@ -25,11 +28,10 @@ const Todos = () => {
       )
       .then(() => setTodo(""));
   };
+
+  //할일 조회
   useEffect(() => {
     localStorage.getItem("AccessToken") ? "" : navigate("/signin");
-  }, []);
-
-  useEffect(() => {
     axios
       .get("https://www.pre-onboarding-selection-task.shop/todos", {
         headers: {
@@ -38,7 +40,7 @@ const Todos = () => {
       })
       .then((res) => setData(res.data))
       .catch((err) => console.log(err));
-  }, data);
+  }, [data]);
   return (
     <div>
       <h1>Todos</h1>
@@ -50,20 +52,9 @@ const Todos = () => {
       <button data-testid="new-todo-add-button" onClick={Addtodos}>
         추가
       </button>
-      <ul>
-        {data.map((todo) => (
-          <li key={todo.id}>
-            <label>
-              <input type="checkbox"></input>
-              <span>{todo.todo}</span>
-            </label>
-            <button data-testid="modify-button">수정</button>
-            <button data-testid="delete-button">삭제</button>
-          </li>
-        ))}
-      </ul>
+      <TodoList data={data} />
     </div>
   );
 };
 
-export default Todos;
+export default TodosPage;
